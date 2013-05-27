@@ -9,22 +9,13 @@ use CGI;
 use Encode;
 
 my $script_uri = './search.pl';
-
 my $stops = retrieve('../stops.store');
 
 my $q = CGI->new;
 
-
-use Data::Dumper;
-{
-	package Data::Dumper;
-	sub qquote { return shift; }
-}
-$Data::Dumper::Useperl = 1;
-
-
 my $key = Encode::decode('utf-8',$q->param('key'));
 my $index = Encode::decode('utf-8',$q->param('index'));
+
 if(defined $key){
 	print << "_HTML_";
 Content-Type:text/html;charset=utf-8
@@ -43,6 +34,7 @@ _HTML_
 	print "<hr>search.pl</body></html>\n";
 	exit;
 }
+
 if(defined $index){
 	print << "_HTML_";
 Content-Type:text/html;charset=utf-8
@@ -88,7 +80,6 @@ foreach my $i (sort keys %$stops){
 
 print "<hr>search.pl</body></head>\n";
 
-#print Dumper $stops;
 sub remove_dakuon
 {
 	my $orig = shift;
@@ -107,7 +98,6 @@ sub sub_yomi
 {
 	my $orig = shift;
 	
-#	$orig = remove_dakuon($orig);
 	return 'あ' if($orig =~ /[あいうえお]/);
 	return 'か' if($orig =~ /[かきくけこ]/);
 	return 'さ' if($orig =~ /[さしすせそ]/);

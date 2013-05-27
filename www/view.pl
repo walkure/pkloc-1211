@@ -9,11 +9,10 @@ use LWP::Simple;
 use Storable;
 use HTML::TreeBuilder;
 use URI;
-#use CGI::Carp qw(fatalsToBrowser);
 
 binmode(STDOUT, ":utf8");
+
 my $id = retrieve('../id.store');
-my $ua = new LWP::UserAgent;
 my $stop_cache = '../stops/';
 
 my $q = CGI->new;
@@ -39,7 +38,7 @@ print << "_HTML_";
 Content-Type:text/html;charset=utf-8
 
 <html><head><title>$name($yomi)</title></head><body>
-$name No.$num
+$name No.$num [<a href="$timetable">時刻表</a>]
 <hr>
 _HTML_
 
@@ -48,7 +47,7 @@ foreach my $info(get_stop_list($num)){
 }
 
 print << "_HTML_";
-<hr>[<a href="$timetable">時刻表</a>] view.pl</body></html>
+<hr>view.pl</body></html>
 _HTML_
 
 sub get_stop_list
@@ -81,7 +80,6 @@ sub get_content
 {
 	my($code,$page) = @_;
 	my $uri = sprintf('http://www.city.kyoto.jp/kotsu/bls/m/%03dp%1d.shtm',$code,$page);
-#	print "[$uri]\n";
 	get($uri);
 }
 
