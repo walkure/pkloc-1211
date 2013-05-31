@@ -24,7 +24,7 @@ unless($num =~ /^\d{1,3}/){
 	print "invalid param\n";
 	exit;
 }
-
+$num = sprintf('%03d',$num+0);
 unless(defined $id->{$num}){
 	print "Content-Type:text/plain;charset=utf-8\n\n";
 	print "stop not found\n";
